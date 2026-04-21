@@ -18,27 +18,33 @@
 ```bash
 cd /Users/aryanchoubey/Documents/SideProjects/site-outreach
 
-# LinkedIn DM (default)
-node outreach.js "https://example.com"
+# WITH a URL — scrapes the site first, then generates message
+node outreach.js "https://example.com"                    # linkedin-dm
+node outreach.js "https://example.com" email              # email
+node outreach.js "https://example.com" comment            # comment
 
-# Email
-node outreach.js "https://example.com" email
-
-# Social media comment
-node outreach.js "https://example.com" comment
+# WITHOUT a URL — generates from context/request only
+node outreach.js "Dog groomer needs a website revamp"
+node outreach.js "She runs a bakery, posted looking for SEO help" comment
+node outreach.js "Plumber in London wants more leads" email
 ```
+
+## Two Modes
+### 1. Site Analysis (URL provided)
+- Scrapes homepage + /about, /services, /contact via Firecrawl
+- Extracts branding (colours, fonts, components)
+- Finds specific design, SEO, content, and technical issues
+- Generates message referencing actual findings from the site
+
+### 2. Request-Based (no URL)
+- Takes a description of what the client needs
+- Generates industry-specific suggestions based on their business type
+- No scraping — just smart context-based outreach
 
 ## Output Formats
 - **linkedin-dm** — Subject line + short DM (under 150 words), soft offer
 - **email** — Subject line + professional email (under 200 words), clear CTA
-- **comment** — Short reply (under 80 words), 3 findings, offer to share more
-
-## How It Works
-1. Firecrawl scrapes homepage (markdown + branding format)
-2. Firecrawl scrapes /about, /services, /contact (2s delay between each)
-3. Claude analyses all data for design, SEO, content, technical issues
-4. Claude generates the outreach message in the chosen format
-5. Message copied to clipboard via pbcopy
+- **comment** — Short reply (under 80 words), 2-3 points, offer to share more
 
 ## Requirements
 - `claude` CLI (already installed)
